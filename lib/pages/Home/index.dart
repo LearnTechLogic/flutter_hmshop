@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_hmshop/api/home.dart';
 import 'package:flutter_hmshop/components/Home/HmCategory.dart';
 import 'package:flutter_hmshop/components/Home/HmHot.dart';
 import 'package:flutter_hmshop/components/Home/HmMoreList.dart';
@@ -15,11 +16,16 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   
-  final List<BannerItem> _bannerList = [
-    BannerItem(id: "1", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg"),
-    BannerItem(id: "2", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.jpg"),
-    BannerItem(id: "3", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg"),
-  ];
+  // final List<BannerItem> _bannerList = [
+  //   BannerItem(id: "1", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg"),
+  //   BannerItem(id: "2", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.jpg"),
+  //   BannerItem(id: "3", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg"),
+  // ];
+  List<BannerItem> _bannerList = [];
+  void _getBannerList() async{
+     _bannerList = await getBannerListAPI();
+     setState(() {});
+  }
   
   // 获取滚动容器的内容
   List<Widget> _getScrollChildern(){
@@ -54,6 +60,12 @@ class _HomeViewState extends State<HomeView> {
 
     ];
   }
+  @override
+  void initState() {
+    super.initState();
+    _getBannerList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: _getScrollChildern());// 自定义滚动组件，要搭配sliver家族的内容
