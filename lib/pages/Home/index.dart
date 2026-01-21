@@ -4,6 +4,7 @@ import 'package:flutter_hmshop/components/Home/HmHot.dart';
 import 'package:flutter_hmshop/components/Home/HmMoreList.dart';
 import 'package:flutter_hmshop/components/Home/HmSlider.dart';
 import 'package:flutter_hmshop/components/Home/HmSuggestion.dart';
+import 'package:flutter_hmshop/viewmodels/home.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -13,12 +14,19 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  
+  final List<BannerItem> _bannerList = [
+    BannerItem(id: "1", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/1.jpg"),
+    BannerItem(id: "2", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/2.jpg"),
+    BannerItem(id: "3", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg"),
+  ];
+  
   // 获取滚动容器的内容
   List<Widget> _getScrollChildern(){
     return [
       // 包裹普通widget的sliver家族的组件
       // 放置轮播图
-      SliverToBoxAdapter(child: HmSlider()),
+      SliverToBoxAdapter(child: HmSlider(bannerList: _bannerList)),
       // 放置分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       //SliverGrid SliverList只能纵向排列
