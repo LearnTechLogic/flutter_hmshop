@@ -22,8 +22,21 @@ class _HomeViewState extends State<HomeView> {
   //   BannerItem(id: "3", imgUrl: "https://yjy-teach-oss.oss-cn-beijing.aliyuncs.com/meituan/3.jpg"),
   // ];
   List<BannerItem> _bannerList = [];
+  List<CategoryItem> _categoryList = [];
+  SpecialRecommendResult _specialRecommendResult = SpecialRecommendResult(id: "", title: "", subTypes: []);
+  // 获取轮播图数据
   void _getBannerList() async{
      _bannerList = await getBannerListAPI();
+     setState(() {});
+  }
+  // 获取分类数据
+  void _getCategoryList() async{
+     _categoryList = await getCategoryListAPI();
+     setState(() {});
+  }
+  // 获取推荐数据
+  void _getProductList() async{
+     _specialRecommendResult = await getProductListAPI();
      setState(() {});
   }
   
@@ -36,10 +49,10 @@ class _HomeViewState extends State<HomeView> {
       // 放置分类组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       //SliverGrid SliverList只能纵向排列
-      SliverToBoxAdapter(child: HmCategory()),
+      SliverToBoxAdapter(child: HmCategory(categoryList: _categoryList)),
       // 放置推荐组件
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      SliverToBoxAdapter(child: HmSuggestion()),
+      SliverToBoxAdapter(child: HmSuggestion(specialRecommendResult: _specialRecommendResult)),
       // 放置爆款
       SliverToBoxAdapter(child: SizedBox(height:  10)),
       SliverToBoxAdapter(child: Padding(
@@ -56,14 +69,14 @@ class _HomeViewState extends State<HomeView> {
       // 放置无限滚动列表
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       HmMoreList()
-
-
     ];
   }
   @override
   void initState() {
     super.initState();
     _getBannerList();
+    _getCategoryList();
+    _getProductList();
   }
 
   @override
