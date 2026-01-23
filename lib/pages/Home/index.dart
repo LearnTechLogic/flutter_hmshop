@@ -24,6 +24,11 @@ class _HomeViewState extends State<HomeView> {
   List<BannerItem> _bannerList = [];
   List<CategoryItem> _categoryList = [];
   SpecialRecommendResult _specialRecommendResult = SpecialRecommendResult(id: "", title: "", subTypes: []);
+  // 热榜推荐
+  SpecialRecommendResult _inVogueResult = SpecialRecommendResult(id: "", title: "", subTypes: [],);
+  // 一站式推荐
+  SpecialRecommendResult _oneStopResult = SpecialRecommendResult(id: "", title: "", subTypes: [],);
+
   // 获取轮播图数据
   void _getBannerList() async{
      _bannerList = await getBannerListAPI();
@@ -39,7 +44,19 @@ class _HomeViewState extends State<HomeView> {
      _specialRecommendResult = await getProductListAPI();
      setState(() {});
   }
-  
+
+  // 获取热榜推荐列表
+  void _getInVogueList() async {
+    _inVogueResult = await getInVogueListAPI();
+    setState(() {});
+  }
+
+  // 获取一站式推荐列表
+  void _getOneStopList() async {
+    _oneStopResult = await getOneStopListAPI();
+    setState(() {});
+  }
+
   // 获取滚动容器的内容
   List<Widget> _getScrollChildern(){
     return [
@@ -60,9 +77,14 @@ class _HomeViewState extends State<HomeView> {
         child: Flex(
           direction: Axis.horizontal,
           children: [
-            Expanded(child: HmHot()),
+            Expanded(
+              child: HmHot(result: _inVogueResult, type: "hot"),
+            ),
             SizedBox(width: 10),
-            Expanded(child: HmHot())
+            Expanded(
+              child: HmHot(result: _oneStopResult, type: "step"),
+            ),
+
           ],
         )),
       ),
@@ -77,6 +99,8 @@ class _HomeViewState extends State<HomeView> {
     _getBannerList();
     _getCategoryList();
     _getProductList();
+    _getInVogueList();
+    _getOneStopList();
   }
 
   @override
