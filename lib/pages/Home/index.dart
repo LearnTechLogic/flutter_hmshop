@@ -181,7 +181,5 @@ class _HomeViewState extends State<HomeView> {
         )// 自定义滚动组件，要搭配sliver家族的内容
       ),
     );
-      
-
   }
 }
