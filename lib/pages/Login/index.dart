@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hmshop/api/user.dart';
 import 'package:flutter_hmshop/utils/ToastUtils.dart';
 
 class LoginPage extends StatefulWidget {
@@ -44,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         if (value == null || value.isEmpty) {
           return "密码不能为空";
         }
-        if (!RegExp(r"^[a-zA-Z0-9_]{6-16}$").hasMatch(value)){
+        if (!RegExp(r"^[a-zA-Z0-9_]{6,16}$").hasMatch(value)){
           return "请输入6-16位的字母数字或者下划线";
         }
         return null;
@@ -64,6 +66,21 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  void _login() async {
+    // 登录逻辑
+    try {
+      final res = await loginAPI({
+        "account": _phoneController.text,
+        "password": _codeController.text
+      });
+      ToastUtils.showToast(context, "登录成功");
+      Navigator.pop(context);
+    } catch (e) {
+      ToastUtils.showToast(context, (e as DioException).message);
+    }
+
+  }
+
   // 登录按钮Widget
   Widget _buildLoginButton() {
     return SizedBox(
@@ -74,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
           // 登录逻辑
           if (_key.currentState!.validate()){
             if (_isChecked) {
-
+              _login();
             }else {
               ToastUtils.showToast(context, "请先阅读并同意隐私条款和用户协议");
             }
