@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hmshop/api/user.dart';
 import 'package:flutter_hmshop/stores/TokenManager.dart';
 import 'package:flutter_hmshop/stores/UserController.dart';
+import 'package:flutter_hmshop/utils/LoadingDialog.dart';
 import 'package:flutter_hmshop/utils/ToastUtils.dart';
 import 'package:get/get.dart';
 
@@ -73,15 +74,18 @@ class _LoginPageState extends State<LoginPage> {
   void _login() async {
     // 登录逻辑
     try {
+      Loadingdialog.show(context, message: "登录中...");
       final res = await loginAPI({
         "account": _phoneController.text,
         "password": _codeController.text
       });
       _userController.updaeteUserInfo(res);
       tokenManager.setToken(res.token); // 写入持久化数据
+      Loadingdialog.hide(context);
       ToastUtils.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {
+      Loadingdialog.hide(context);
       ToastUtils.showToast(context, (e as DioException).message);
     }
 
