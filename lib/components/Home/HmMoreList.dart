@@ -20,7 +20,7 @@ class _HmMoreListState extends State<HmMoreList> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: AspectRatio(
-              aspectRatio: 1.0,// 宽高比
+              aspectRatio: 1.0, // 宽高比
               child: Image.network(
                 widget.recommendList[index].picture,
                 fit: BoxFit.cover,
@@ -40,7 +40,7 @@ class _HmMoreListState extends State<HmMoreList> {
               widget.recommendList[index].name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.black, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 16),
             ),
           ),
           SizedBox(height: 6),
@@ -72,7 +72,7 @@ class _HmMoreListState extends State<HmMoreList> {
                 ),
                 Text(
                   "${widget.recommendList[index].payCount}人付款",
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
                 ),
               ],
             ),
@@ -88,13 +88,13 @@ class _HmMoreListState extends State<HmMoreList> {
     return SliverGrid.builder(
       itemCount: widget.recommendList.length,
       gridDelegate:
-      // 网格是两列
-      SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 0.75,
-      ),
+          // 网格是两列
+          SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.75,
+          ),
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
