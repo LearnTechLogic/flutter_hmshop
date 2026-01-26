@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hmshop/api/user.dart';
 import 'package:flutter_hmshop/pages/Cart/index.dart';
 import 'package:flutter_hmshop/pages/Category/index.dart';
 import 'package:flutter_hmshop/pages/Home/index.dart';
 import 'package:flutter_hmshop/pages/Mine/index.dart';
+import 'package:flutter_hmshop/stores/TokenManager.dart';
+import 'package:flutter_hmshop/stores/UserController.dart';
+import 'package:get/get.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -54,6 +58,19 @@ class _MainPageState extends State<MainPage> {
     return [HomeView(), CategoryView(), CartView(), MineView()];
   }
 
+  @override
+  void initState() {
+    super.initState();
+    // 初始化用户
+    _initUser();
+  }
+  final UserController _userController = Get.put(UserController());
+  void _initUser() async {
+    await tokenManager.init();
+    if (tokenManager.getToken().isNotEmpty) {
+      _userController.updaeteUserInfo(await getUserInfoAPI());
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

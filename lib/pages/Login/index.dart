@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hmshop/api/user.dart';
+import 'package:flutter_hmshop/stores/TokenManager.dart';
 import 'package:flutter_hmshop/stores/UserController.dart';
 import 'package:flutter_hmshop/utils/ToastUtils.dart';
 import 'package:get/get.dart';
@@ -76,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
         "account": _phoneController.text,
         "password": _codeController.text
       });
-      _userController.uodaeteUserInfo(res);
+      _userController.updaeteUserInfo(res);
+      tokenManager.setToken(res.token); // 写入持久化数据
       ToastUtils.showToast(context, "登录成功");
       Navigator.pop(context);
     } catch (e) {

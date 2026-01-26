@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class UserController extends GetxController{
   var user = UserInfo.fromJSON({}).obs; // user对象被监听
   // 想要取值的话 需要 user.value
-  uodaeteUserInfo(UserInfo newUser){
+  updaeteUserInfo(UserInfo newUser){
     user.value = newUser;
   }
 }
